@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import logo from './images/chuck-norris.jpg';
 import './App.css';
 import ReactDom from 'react-dom';
-import { SketchPicker } from 'react-color';
+import Header from './components/Header/Header.jsx';
+import ColorList from './components/List/ColorList/ColorList.jsx';
+import Form from './components/FormColor/Form/Form.jsx';
+import Footer from './components/Footer/Footer.jsx';
 
 class App extends Component {
   state = {
     //déclaration background de départ
     objStyle : {backgroundColor: 'violet'},
     //déclaration propriété nom pour ajout couleur
-    background: '#fff',
+    background: '#eee',
     colors : [
       {id:1, name:'violet', color:'#f5aafb'},
       {id:2, name:'marin blue', color:'rgb(43, 77, 153)'},
@@ -20,13 +22,15 @@ class App extends Component {
       {id:7, name:'rouge', color:'#FC0000'}
     ],
   };
-  //change couleur de background
-  changeColor(color) {
+
+  //définit avec arrow function car permet de récupérer le this
+  changeColor = (color) => {
     this.setState({
       objStyle : {backgroundColor: color},
     });
   }
-  //récupère valeur input
+
+  //récupère valeur de l'input
   handleChange = event =>
     {
     this.setState({
@@ -50,6 +54,7 @@ class App extends Component {
     console.log('background : ', this.state.background);
   }
 
+  //supprime dernier élément
   handleDelete = event => {
     event.preventDefault();
     this.setState( (state) => {
@@ -66,41 +71,29 @@ class App extends Component {
   render() {
     return (
       <div className="App" >
-        <div className="App-header" style={this.state.objStyle}>
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to the world of color</h2>
-        </div>
-        <ul> {
-            this.state.colors.map( item =>
-              <li key={item.id}>
-                <button style={{backgroundColor : item.color}} onClick={() => this.changeColor(item.color)}>{item.name}</button>
-              </li>
-            )
-          }
-        </ul>
+
+        <Header
+          objStyle={this.state.objStyle} />
+          <ColorList
+            colors={this.state.colors}
+            changeColor={this.changeColor}
+            />
+
         <div className="colorChoice">
-          <form>
-            <p>
-              <label>Name : </label>
-            </p>
-            <p>
-            <input type="text" name="colorName" maxLength="20"  required="true" placeHolder="dark blue" onChange={this.handleChange} />
-            </p>
-            <p>
-              <label>Color hexadecimal ou rgb : </label>
-            </p>
 
-            <SketchPicker color={this.state.background} onChangeComplete={this.handleChangePalette}/>
+          <Form
+          background={this.state.background}
+          handleChange={this.handleChange} handleChangePalette={this.handleChangePalette}
+          handleSubmit={this.handleSubmit}
+          handleDelete={this.handleDelete}
+          />
+        </div>
 
-            <button className="validate" onClick={this.handleSubmit}>Valider</button>
-            <p>
-              <button className="delete" onClick={this.handleDelete}>Supprimer dernier ajout</button>
-            </p>
-          </form>
-        </div>
-        <div className="footer" style={this.state.objStyle}>
-          <p>I am the footer</p>
-        </div>
+        <Footer
+          objStyle={this.state.objStyle}
+          text={"C'est un footer un peu triste"}
+        />
+
       </div>
     );
   }

@@ -18,36 +18,10 @@
   to { transform: rotate(360deg); }
 }
 
-ul {
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  width: 400px;
-  margin: auto;
-  margin-bottom: 50px;
-}
-
-ul > li > button {
-  width: 200px;
-  padding: 10%;
-  margin-top: 15px;
-  border-radius: 50px;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: white;
-  text-transform: uppercase;
-}
  .colorChoice {
   display: flex;
   justify-content: center;
  }
-
-form {
-  border: 1px black solid;
-  border-radius: 5px;
-  width: 40%;
-  margin: auto;
-}
 
 .footer {
   border-top: black solid 5px;
